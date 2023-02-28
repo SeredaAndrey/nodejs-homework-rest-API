@@ -49,12 +49,11 @@ const removeContact = async (contactId) => {
 const addContact = async (body) => {
   const { name, email, phone } = body;
   try {
-    let existingContact = false;
+    // let existingContact = false;
     const json = await fs.readFile(contactsPath, "utf8");
     const contacts = JSON.parse(json);
-    if (contacts.find((contact) => contact.email === email)) {
-      existingContact = true;
-    }
+
+    const existingContact = contacts.find((contact) => contact.email === email);
 
     if (!existingContact) {
       const id = shortid.generate();
