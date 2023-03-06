@@ -11,6 +11,7 @@ const postSchema = Joi.object({
   phone: Joi.string()
     .pattern(/^[0-9]+$/, { name: "numbers" })
     .required(),
+  favorite: Joi.boolean(),
 });
 const putSchema = Joi.object({
   name: Joi.string().alphanum().min(5).max(16),
@@ -19,6 +20,10 @@ const putSchema = Joi.object({
     tlds: { allow: ["com", "net"] },
   }),
   phone: Joi.string().pattern(/^[0-9]+$/, { name: "numbers" }),
+  favorite: Joi.boolean(),
+});
+const changeFavSchema = Joi.object({
+  favorite: Joi.boolean().required(),
 });
 
-module.exports = { postSchema, putSchema };
+module.exports = { postSchema, putSchema, changeFavSchema };
