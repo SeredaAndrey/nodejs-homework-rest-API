@@ -2,7 +2,7 @@ const {
   postSchema,
   putSchema,
   changeFavSchema,
-} = require("../routes/api/validate");
+} = require("../routes/api/contactsValidate");
 const {
   getAllContacts,
   getSingleContact,
@@ -10,7 +10,7 @@ const {
   removeContact,
   changeContact,
   changeFavoritContact,
-} = require("../service/service");
+} = require("../service/contactService");
 
 const getContactController = async (req, res, next) => {
   try {

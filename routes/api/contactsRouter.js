@@ -6,7 +6,7 @@ const {
   removeContactController,
   changeContactController,
   changeFavoritContactController,
-} = require("../../controller/controllers");
+} = require("../../controller/contactsControllers");
 
 const router = express.Router();
 
