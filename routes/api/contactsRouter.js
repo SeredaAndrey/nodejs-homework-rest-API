@@ -6,9 +6,12 @@ const {
   removeContactController,
   changeContactController,
   changeFavoritContactController,
-} = require("../../controller/controllers");
+} = require("../../controller/contactsControllers");
+const { authMaiddleware } = require("../../middleware/authMiddleware");
 
 const router = express.Router();
+
+router.use(authMaiddleware);
 
 router.get("/", getContactController);
 

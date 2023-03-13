@@ -25,5 +25,10 @@ const putSchema = Joi.object({
 const changeFavSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
+const getRequestValidate = Joi.object({
+  page: Joi.string().pattern(/[0-9]/, { name: "numbers" }).min(1),
+  limit: Joi.string().pattern(/[0-9]/, { name: "numbers" }).min(1),
+  favorite: Joi.boolean(),
+});
 
-module.exports = { postSchema, putSchema, changeFavSchema };
+module.exports = { postSchema, putSchema, changeFavSchema, getRequestValidate };
