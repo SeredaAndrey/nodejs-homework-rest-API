@@ -3,14 +3,14 @@ const jwt = require("jsonwebtoken");
 
 const User = require("./schemas/userSchema");
 
-const registration = async (email, password) => {
+const registration = async (email, password, avatarURL) => {
   const user = await User.findOne({ email });
 
   if (user) {
     return;
   }
 
-  const newUser = new User({ email, password });
+  const newUser = new User({ email, password, avatarURL });
   await newUser.save();
   return newUser;
 };
@@ -26,7 +26,11 @@ const login = async (email, password) => {
       process.env.JWT_SECRET
     );
     await User.findOneAndUpdate({ email }, { token: token }, { new: true });
-    return { token: token, subscription: user.subscription };
+    return {
+      token: token,
+      subscription: user.subscription,
+      avatarURL: user.avatarURL,
+    };
   }
   return {
     code: 401,

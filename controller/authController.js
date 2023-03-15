@@ -1,12 +1,15 @@
+const gravatar = require("gravatar");
+
 const { userSchema } = require("../service/Validate/userValidate");
 const { registration, login, logout } = require("../service/authService");
 
 const registrationController = async (req, res, next) => {
   const reqValidate = userSchema.validate(req.body);
   const { email, password } = req.body;
+  const avatarURL = gravatar.url(email, { s: "250", r: "x", d: "retro" }, true);
   try {
     if (!reqValidate.error) {
-      const user = await registration(email, password);
+      const user = await registration(email, password, avatarURL);
       if (user) {
         return res.status(201).json({
           message: "created",
@@ -52,6 +55,7 @@ const loginController = async (req, res, next) => {
         user: {
           email: email,
           subscription: data.subscription,
+          avatarURL: data.avatarURL,
         },
       });
     } else {

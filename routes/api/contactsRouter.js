@@ -25,4 +25,4 @@ router.put("/:contactId", changeContactController);
 
 router.put("/:contactId/favorite", changeFavoritContactController);
 
-module.exports = router;
+module.exports = { contactsRouter: router };

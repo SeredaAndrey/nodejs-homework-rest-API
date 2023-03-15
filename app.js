@@ -4,9 +4,10 @@ const cors = require("cors");
 
 require("dotenv").config();
 
-const contactsRouter = require("./routes/api/contactsRouter");
-const authRouter = require("./routes/api/authRouter");
-const userRouter = require("./routes/api/userRouter");
+const { contactsRouter } = require("./routes/api/contactsRouter");
+const { authRouter } = require("./routes/api/authRouter");
+const { userRouter } = require("./routes/api/userRouter");
+const { filesRouter } = require("./routes/api/filesRouter");
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use(express.json());
 
 app.use("/api/contacts", contactsRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/users", userRouter);
+app.use("/api/users", userRouter, filesRouter);
+// app.use("/api/users", filesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

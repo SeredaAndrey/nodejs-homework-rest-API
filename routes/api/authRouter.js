@@ -17,4 +17,4 @@ router.use(authMaiddleware);
 
 router.get("/logout", logoutController);
 
-module.exports = router;
+module.exports = { authRouter: router };
