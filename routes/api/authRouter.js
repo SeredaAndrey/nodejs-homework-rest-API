@@ -4,17 +4,18 @@ const {
   loginController,
   logoutController,
 } = require("../../controller/authController");
+const { asyncWrapper } = require("../../errorHandler/errors");
 
 const { authMaiddleware } = require("../../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.post("/registration", registrationController);
+router.post("/registration", asyncWrapper(registrationController));
 
-router.post("/login", loginController);
+router.post("/login", asyncWrapper(loginController));
 
 router.use(authMaiddleware);
 
-router.get("/logout", logoutController);
+router.get("/logout", asyncWrapper(logoutController));
 
 module.exports = { authRouter: router };
