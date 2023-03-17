@@ -2,6 +2,7 @@ const gravatar = require("gravatar");
 
 const { userSchema } = require("../service/Validate/userValidate");
 const { registration, login, logout } = require("../service/authService");
+const { ConflictError } = require("../errorHandler/errors");
 
 const registrationController = async (req, res, next) => {
   const reqValidate = userSchema.validate(req.body);
@@ -20,25 +21,15 @@ const registrationController = async (req, res, next) => {
           },
         });
       }
-      return res.status(409).json({
-        status: "error",
-        code: 409,
-        message: "Email is already in use",
-        data: "Conflict",
-      });
+      throw new ConflictError("Email is already in use");
     } else {
-      return res.status(400).json({
-        message: reqValidate.error,
-        code: 400,
-      });
+      throw new ConflictError(reqValidate.error);
     }
   } catch (e) {
-    res.status(409).json({ message: e });
-    next(e);
+    throw new ConflictError(e);
   }
 };
 const loginController = async (req, res, next) => {
-  // console.log("req.body: ", req.body);
   const reqValidate = userSchema.validate(req.body);
   const { email, password } = req.body;
   try {

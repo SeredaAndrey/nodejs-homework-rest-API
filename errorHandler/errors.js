@@ -12,6 +12,19 @@ class AutorizationError extends Errors {
   }
 }
 
+class ConflictError extends Errors {
+  constructor(message) {
+    super(message);
+    this.status = 409;
+  }
+}
+class ValidateError extends Errors {
+  constructor(message) {
+    super(message);
+    this.status = 400;
+  }
+}
+
 const asyncWrapper = (controller) => {
   return (req, res, next) => {
     controller(req, res).catch(next);
@@ -29,4 +42,6 @@ module.exports = {
   asyncWrapper,
   errorHandler,
   AutorizationError,
+  ConflictError,
+  ValidateError,
 };
