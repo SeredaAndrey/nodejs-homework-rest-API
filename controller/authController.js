@@ -38,11 +38,13 @@ const registrationController = async (req, res, next) => {
   }
 };
 const loginController = async (req, res, next) => {
+  // console.log("req.body: ", req.body);
   const reqValidate = userSchema.validate(req.body);
   const { email, password } = req.body;
   try {
     if (!reqValidate.error) {
       const data = await login(email, password);
+      console.log("data: ", data);
       if (!data.token) {
         return res.status(401).json({
           code: 401,

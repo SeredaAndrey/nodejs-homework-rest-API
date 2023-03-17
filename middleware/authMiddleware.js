@@ -4,27 +4,15 @@ const { AutorizationError } = require("../errorHandler/errors");
 const authMaiddleware = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    // return next(
-    //   new AutorizationError(
-    //     "Please, provide a token in request authorization header"
-    //   )
-    // );
     return next(
-      res.status(401).json({
-        message: "Please, provide a token in request authorization header",
-        code: 401,
-      })
+      new AutorizationError(
+        "Please, provide a token in request authorization header"
+      )
     );
   }
   const [, token] = authorization.split(" ");
   if (!token) {
-    // return next(new AutorizationError("Not authorized"));
-    return next(
-      res.status(401).json({
-        message: "Not authorized",
-        code: 401,
-      })
-    );
+    return next(new AutorizationError("Not authorized"));
   }
   try {
     const user = jwt.decode(token, process.env.JWT_SECRET);
@@ -33,8 +21,7 @@ const authMaiddleware = (req, res, next) => {
 
     next();
   } catch (e) {
-    next(res.status(401).json({ message: e }));
-    // next(new AutorizationError("Invalid token"));
+    next(new AutorizationError("Invalid token"));
   }
 };
 
