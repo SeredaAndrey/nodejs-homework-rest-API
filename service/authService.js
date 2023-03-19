@@ -16,18 +16,14 @@ const registration = async (email, password, avatarURL) => {
 };
 
 const login = async (email, password) => {
-  // console.log("email, password", email, password);
   const user = await User.findOne({ email });
-  // console.log("user: ", user);
   if (user && (await bcrypt.compare(password, user.password))) {
-    console.log("correct!!!");
     const token = jwt.sign(
       {
         _id: user._id,
       },
       process.env.JWT_SECRET
     );
-    console.log("token: ", token);
     await User.findOneAndUpdate({ email }, { token: token }, { new: true });
     return {
       token: token,
@@ -35,10 +31,6 @@ const login = async (email, password) => {
       avatarURL: user.avatarURL,
     };
   }
-  return {
-    code: 401,
-    message: "Email or password is wrong",
-  };
 };
 
 const logout = async (_id) => {

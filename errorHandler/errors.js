@@ -4,24 +4,28 @@ class Errors extends Error {
     this.status = 400;
   }
 }
-
+class ValidateError extends Errors {
+  constructor(message) {
+    super(message);
+    this.status = 400;
+  }
+}
 class AutorizationError extends Errors {
   constructor(message) {
     super(message);
     this.status = 401;
   }
 }
-
+class FoundingError extends Errors {
+  constructor(message) {
+    super(message);
+    this.status = 404;
+  }
+}
 class ConflictError extends Errors {
   constructor(message) {
     super(message);
     this.status = 409;
-  }
-}
-class ValidateError extends Errors {
-  constructor(message) {
-    super(message);
-    this.status = 400;
   }
 }
 
@@ -44,4 +48,5 @@ module.exports = {
   AutorizationError,
   ConflictError,
   ValidateError,
+  FoundingError,
 };

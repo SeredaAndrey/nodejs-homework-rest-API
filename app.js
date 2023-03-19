@@ -20,7 +20,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/contacts", contactsRouter);
-app.use("/api/users", userRouter, filesRouter);
+app.use("/api/users", userRouter);
+app.use("/api/users", filesRouter);
 app.use(errorHandler);
 
 app.use((req, res) => {
