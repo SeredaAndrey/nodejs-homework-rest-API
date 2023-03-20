@@ -7,22 +7,26 @@ const {
   changeContactController,
   changeFavoritContactController,
 } = require("../../controller/contactsControllers");
+const { asyncWrapper } = require("../../errorHandler/errors");
 const { authMaiddleware } = require("../../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.use(authMaiddleware);
 
-router.get("/", getContactController);
+router.get("/", asyncWrapper(getContactController));
 
-router.get("/:contactId", getContactByIdController);
+router.get("/:contactId", asyncWrapper(getContactByIdController));
 
-router.post("/", addContactController);
+router.post("/", asyncWrapper(addContactController));
 
-router.delete("/:contactId", removeContactController);
+router.delete("/:contactId", asyncWrapper(removeContactController));
 
-router.put("/:contactId", changeContactController);
+router.put("/:contactId", asyncWrapper(changeContactController));
 
-router.put("/:contactId/favorite", changeFavoritContactController);
+router.put(
+  "/:contactId/favorite",
+  asyncWrapper(changeFavoritContactController)
+);
 
-module.exports = router;
+module.exports = { contactsRouter: router };

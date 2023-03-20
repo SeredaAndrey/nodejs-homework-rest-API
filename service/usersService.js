@@ -8,6 +8,15 @@ const patchSubscription = async (_id, subscription) => {
   );
 };
 
+const patchAvatar = async (_id, filePathName) => {
+  return await User.findOneAndUpdate(
+    { _id },
+    { avatarURL: filePathName },
+    { new: true }
+  );
+};
+
 module.exports = {
   patchSubscription,
+  patchAvatar,
 };
