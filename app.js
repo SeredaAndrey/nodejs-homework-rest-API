@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const cron = require("node-cron");
 
 require("dotenv").config();
 
@@ -9,6 +10,7 @@ const { authRouter } = require("./routes/api/authRouter");
 const { userRouter } = require("./routes/api/userRouter");
 const { filesRouter } = require("./routes/api/filesRouter");
 const { errorHandler } = require("./errorHandler/errors");
+const { deleteTempFile } = require("./controller/filesController");
 
 const app = express();
 
@@ -30,6 +32,10 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
+});
+
+cron.schedule("*/5 * * * *", () => {
+  deleteTempFile();
 });
 
 module.exports = app;
